@@ -1,33 +1,23 @@
-# tool-loop-guard
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandeshbagmare/tool-loop-guard/main/assets/banner.svg" width="100%" alt="tool-loop-guard: catch an agent repeating itself while it is still cheap">
+</p>
 
-Catch an agent that repeats or cycles the same tool call, before the context window is
-full and the error message says nothing useful.
+<p align="center">
+  <a href="https://pypi.org/project/tool-loop-guard/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/tool-loop-guard.svg"></a>
+  <a href="https://pypi.org/project/tool-loop-guard/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/tool-loop-guard.svg"></a>
+  <a href="https://pypi.org/project/tool-loop-guard/"><img alt="Downloads" src="https://img.shields.io/pypi/dm/tool-loop-guard.svg"></a>
+  <a href="https://github.com/sandeshbagmare/tool-loop-guard/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/sandeshbagmare/tool-loop-guard/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/sandeshbagmare/tool-loop-guard/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/tool-loop-guard.svg"></a>
+  <a href="https://sandeshbagmare.github.io/tool-loop-guard/"><img alt="docs" src="https://img.shields.io/badge/docs-online-2ea44f.svg"></a>
+  <a href="https://pypi.org/project/tool-loop-guard/"><img alt="zero dependencies" src="https://img.shields.io/badge/dependencies-0-2ea44f.svg"></a>
+</p>
 
-[![PyPI](https://img.shields.io/pypi/v/tool-loop-guard.svg)](https://pypi.org/project/tool-loop-guard/)
-[![Python](https://img.shields.io/pypi/pyversions/tool-loop-guard.svg)](https://pypi.org/project/tool-loop-guard/)
-[![tests](https://github.com/sandeshbagmare/tool-loop-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/sandeshbagmare/tool-loop-guard/actions/workflows/ci.yml)
-[![license](https://img.shields.io/pypi/l/tool-loop-guard.svg)](https://github.com/sandeshbagmare/tool-loop-guard/blob/main/LICENSE)
+<h3 align="center">catch an agent repeating itself while it is still cheap</h3>
+<p align="center"><em>Standard library only. No runtime dependencies. Python 3.9+.</em></p>
 
-```python
->>> from tool_loop_guard import LoopGuard
->>> guard = LoopGuard(max_repeats=2)
->>> guard.observe("read_file", {"path": "a.txt"}).action
-'allow'
->>> guard.observe("read_file", {"path": "a.txt"}).action
-'stop'
->>> guard.observe("read_file", {"path": "a.txt"}).reason
-'read_file called 2 times with the same arguments'
-```
-
-A stuck agent does not crash. It emits one more `read_file`, one more `search`, and the
-trace looks like work until a step limit fires. `tool-loop-guard` recognises the two
-shapes this takes:
-
-- **repetition** — the same tool with the same arguments, again and again;
-- **cycles** — `search` → `read` → `search` → `read`, where no call repeats twice in a
-  row but the set of calls stops changing.
-
-It is framework agnostic: three methods and a frozen decision object.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandeshbagmare/tool-loop-guard/main/assets/how.svg" width="720" alt="how tool-loop-guard fits in">
+</p>
 
 ## Install
 
