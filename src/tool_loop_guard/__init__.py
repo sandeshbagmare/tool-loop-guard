@@ -5,15 +5,15 @@ emitting a tool call, the runtime keeps executing it, and the context window fil
 near-identical messages until a recursion limit kills the run — with the actual cause
 nowhere in the error. This catches the pattern early, while the reason is still visible.
 
-    >>> guard = LoopGuard(max_repeats=2)
+    >>> guard = LoopGuard(max_repeats=3)
     >>> guard.observe("read_file", {"path": "a.txt"}).action
     'allow'
     >>> guard.observe("read_file", {"path": "a.txt"}).action
-    'allow'
+    'warn'
     >>> guard.observe("read_file", {"path": "a.txt"}).action
     'stop'
     >>> guard.observe("read_file", {"path": "a.txt"}).reason
-    'read_file called 3 times with the same arguments'
+    'read_file called 4 times with the same arguments'
 
 Two failures are covered: a repeated identical call, and a cycle such as
 ``search`` → ``read`` → ``search`` → ``read`` where nothing repeats three times in a row
